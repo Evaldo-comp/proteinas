@@ -1,48 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>RA Teste Proteína</title>
+<head>
+<meta charset="UTF-8" />
+<title>RA Teste Proteína</title>
 
-    <!-- MindAR (Three.js integration) -->
-    <script src="https://unpkg.com/mind-ar@1.1.7/dist/mindar-image-three.prod.js"></script>
-    <!-- Three.js compatível -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js"></script>
+<!-- Three.js -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js"></script>
+<!-- MindAR com Three.js -->
+<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.0/dist/mindar-image-three.prod.js"></script>
 
-    <style>
-      body, html { margin: 0; overflow: hidden; width: 100%; height: 100%; }
-      #container { width: 100%; height: 100%; }
-    </style>
-  </head>
-  <body>
-    <div id="container"></div>
+<style>
+  body, html { margin: 0; overflow: hidden; width: 100%; height: 100%; }
+  #container { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="container"></div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        console.log("MINDAR carregado?", window.MINDAR); // debug
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("MINDAR carregado?", window.MINDAR);
 
-        const mindarThree = new window.MINDAR.IMAGE.MindARThree({
-          container: document.querySelector("#container"),
-          imageTargetSrc: "targets.mind",
-        });
+  const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+    container: document.querySelector("#container"),
+    imageTargetSrc: "targets.mind", // seu arquivo de marcador
+  });
 
-        const { renderer, scene, camera } = mindarThree;
-        const anchor = mindarThree.addAnchor(0);
+  const { renderer, scene, camera } = mindarThree;
+  const anchor = mindarThree.addAnchor(0);
 
-        const cube = new THREE.Mesh(
-          new THREE.BoxGeometry(0.3, 0.3, 0.3),
-          new THREE.MeshBasicMaterial({ color: 0xff0000 })
-        );
-        anchor.group.add(cube);
+  // Cubo vermelho de teste
+  const cube = new THREE.Mesh(
+    new THREE.BoxGeometry(0.3,0.3,0.3),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  );
+  anchor.group.add(cube);
 
-        const start = async () => {
-          await mindarThree.start();
-          renderer.setAnimationLoop(() => {
-            renderer.render(scene, camera);
-          });
-        };
-        start();
-      });
-    </script>
-  </body>
+  const start = async () => {
+    await mindarThree.start();
+    renderer.setAnimationLoop(() => {
+      renderer.render(scene, camera);
+    });
+  };
+  start();
+});
+</script>
+</body>
 </html>
