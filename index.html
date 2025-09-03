@@ -1,3 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>RA Proteína</title>
+
+  <!-- A-Frame via CDN -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <!-- MindAR com A-Frame -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    body, html { margin: 0; overflow: hidden; width: 100%; height: 100%; }
+    a-scene { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+
 <a-scene
     mindar-image="imageTargetSrc: targets.mind;"
     color-space="sRGB"
@@ -5,23 +23,17 @@
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
 
+  <!-- Luzes -->
   <a-entity light="type: ambient; color: #ffffff; intensity: 0.8"></a-entity>
   <a-entity light="type: directional; color: #ffffff; intensity: 0.5" position="1 1 1"></a-entity>
 
+  <!-- Câmera MindAR -->
   <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+  <!-- Assets -->
   <a-assets>
     <a-asset-item id="avatarModel" src="8Q1V.glb"></a-asset-item>
   </a-assets>
 
-  <a-entity mindar-image-target="targetIndex: 0">
-    <a-gltf-model 
-      src="#avatarModel" 
-      scale="0.005 0.005 0.005" 
-      position="0 0 0.1" 
-      rotation="0 0 0"
-      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
-    </a-gltf-model>
-  </a-entity>
-
-</a-scene>
+  <!-- Modelo sobre o marcador -->
+  <a-entity mindar-image-target="targe
