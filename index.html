@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RA Proteína</title>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+      body, html { margin: 0; overflow: hidden; width: 100%; height: 100%; }
+      #container { width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+          container: document.querySelector("#container"),
+          imageTargetSrc: "targets.min", // arquivo do marcador
+        });
+
+        const {renderer, scene, camera} = mindarThree;
+        const anchor = mindarThree.addAnchor(0);
+
+        const loader = new THREE.GLTFLoader();
+        loader.load("8Q1V.glb", (gltf) => {
+          const model = gltf.scene;
+          model.scale.set(0.1, 0.1, 0.1); // ajuste de escala
+          model.position.set(0, 0, 0);     // posição em cima do marcador
+          anchor.group.add(model);
+        });
+
+        const start = async () => {
+          await mindarThree.start();
+          renderer.setAnimationLoop(() => {
+            renderer.render(scene, camera);
+          });
+        }
+        start();
+      });
+    </script>
+  </body>
+</html>
